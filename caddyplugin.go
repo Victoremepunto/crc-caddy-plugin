@@ -1,4 +1,4 @@
-package mymodule
+package crccaddyplugin
 
 import (
 	"encoding/base64"
@@ -47,7 +47,7 @@ type IdentResponse struct {
 
 func init() {
 	caddy.RegisterModule(Middleware{})
-	httpcaddyfile.RegisterHandlerDirective("visitor_ip", parseCaddyfile)
+	httpcaddyfile.RegisterHandlerDirective("crcauth", parseCaddyfile)
 }
 
 type Middleware struct {
@@ -61,7 +61,7 @@ type Middleware struct {
 // CaddyModule returns the Caddy module information.
 func (Middleware) CaddyModule() caddy.ModuleInfo {
 	return caddy.ModuleInfo{
-		ID:  "http.handlers.visitor_ip",
+		ID:  "http.handlers.crcauth",
 		New: func() caddy.Module { return new(Middleware) },
 	}
 }
