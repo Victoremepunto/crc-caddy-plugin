@@ -76,7 +76,7 @@ func (m *Middleware) Provision(ctx caddy.Context) error {
 	default:
 		return fmt.Errorf("an output stream is required")
 	}
-	config := crcauthlib.ValidatorConfig{}
+	config := crcauthlib.ValidatorConfig{BOPUrl: m.BOP}
 	validator, err := crcauthlib.NewCRCAuthValidator(&config)
 
 	if err != nil {
