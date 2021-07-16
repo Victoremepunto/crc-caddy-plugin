@@ -20,7 +20,9 @@ RUN ~/go/bin/xcaddy build --with github.com/redhatinsights/caddy-plugin/@v0.0.1=
 FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 COPY --from=builder --chown=65532:65532 /workspace/.local /.local
+COPY CaddyfileSidecar /etc/Caddyfile
 COPY --from=builder /workspace/caddy .
 USER 65532:65532
 
+#ENTRYPOINT ["/caddy", "run"]
 ENTRYPOINT ["/caddy", "run", "--config", "/etc/Caddyfile"]

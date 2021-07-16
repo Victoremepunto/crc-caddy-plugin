@@ -210,7 +210,7 @@ func parseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHandler, error)
 
 	http.Handle("/metrics", handler)
 	go func() {
-		err := http.ListenAndServe(":9000", nil)
+		err := http.ListenAndServe(":9080", nil)
 		if err != nil {
 			fmt.Printf("[ERROR] Starting handler: %v", err)
 		}

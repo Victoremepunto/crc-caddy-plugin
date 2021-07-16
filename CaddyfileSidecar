@@ -1,0 +1,17 @@
+{
+    order crcauth before respond
+    log
+    http_port 8080
+}
+
+
+:8080 {
+    log
+    tls internal
+
+    crcauth {
+        output stdout
+        bop {$CADDY_BOP_URL}
+    }
+    reverse_proxy 127.0.0.1:{$CADDY_PORT}
+}
