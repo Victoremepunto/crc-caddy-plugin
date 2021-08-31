@@ -51,8 +51,9 @@ func init() {
 }
 
 type Middleware struct {
-	Output    string `json:"output,omitempty"`
-	BOP       string `json:"url,omitempty"`
+	Output    string   `json:"output,omitempty"`
+	BOP       string   `json:"url,omitempty"`
+	Whitelist []string `json:"whitelist,omitempty"`
 	validator *crcauthlib.CRCAuthValidator
 
 	w io.Writer
@@ -124,14 +125,15 @@ func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddy
 	urlComponents := strings.Split(r.RequestURI, "/")
 	fmt.Printf("\n\n%v\n\n", urlComponents)
 
+	for _, whitelist := range m.Whitelist {
+		if r.RequestURI == whitelist {
+			return next.ServeHTTP(w, r)
+		}
+	}
 	if len(urlComponents) >= 2 {
 		if urlComponents[1] == "api" {
 			api = urlComponents[2]
-		} else {
-			return next.ServeHTTP(w, r)
 		}
-	} else {
-		return next.ServeHTTP(w, r)
 	}
 
 	ident, err := m.validator.ProcessRequest(r)
@@ -192,6 +194,11 @@ func (m *Middleware) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 				return d.ArgErr()
 			}
 			m.BOP = seg[1].Text
+		case "whitelist":
+			if len(seg) != 2 {
+				return d.ArgErr()
+			}
+			m.Whitelist = strings.Split(seg[1].Text, ",")
 		}
 	}
 	return nil
