@@ -198,7 +198,9 @@ func (m *Middleware) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 			if len(seg) > 2 {
 				return d.ArgErr()
 			}
-			m.Whitelist = strings.Split(seg[1].Text, ",")
+			if len(seg) == 2 {
+				m.Whitelist = strings.Split(seg[1].Text, ",")
+			}
 		}
 	}
 	return nil
