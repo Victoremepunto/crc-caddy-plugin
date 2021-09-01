@@ -195,7 +195,7 @@ func (m *Middleware) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 			}
 			m.BOP = seg[1].Text
 		case "whitelist":
-			if len(seg) != 2 {
+			if len(seg) > 2 {
 				return d.ArgErr()
 			}
 			m.Whitelist = strings.Split(seg[1].Text, ",")
