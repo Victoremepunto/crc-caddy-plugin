@@ -13,7 +13,7 @@ RUN go mod download
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy
 
 COPY caddyplugin.go caddyplugin.go
-RUN ~/go/bin/xcaddy build --with github.com/redhatinsights/caddy-plugin/@v0.0.1=./
+RUN ~/go/bin/xcaddy build v2.4.3 --with github.com/redhatinsights/caddy-plugin/@v0.0.1=./
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
