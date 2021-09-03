@@ -135,7 +135,7 @@ func matchWhitelist(path, whitelist string) bool {
 	}
 
 	if strings.HasSuffix(whitelist, "*") {
-		prefix := whitelist[1:]
+		prefix := whitelist[:len(whitelist)-1]
 		return strings.HasPrefix(path, prefix)
 	}
 
