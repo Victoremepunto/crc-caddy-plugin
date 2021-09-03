@@ -118,6 +118,34 @@ func (d *durationWriter) doWrite() {
 	}
 }
 
+func matchWhitelist(path, whitelist string) bool {
+
+	// Exact match: “abc” will match on value “abc”.
+	// Prefix match: “abc*” will match on value “abc” and “abcd”.
+	// Suffix match: “*abc” will match on value “abc” and “xabc”.
+	// Presence match: “*” will match when value is not empty.
+
+	if !strings.Contains(whitelist, "*") {
+		return path == whitelist
+	}
+
+	if strings.HasPrefix(whitelist, "*") {
+		suffix := whitelist[1:]
+		return strings.HasSuffix(path, suffix)
+	}
+
+	if strings.HasSuffix(whitelist, "*") {
+		prefix := whitelist[1:]
+		return strings.HasPrefix(path, prefix)
+	}
+
+	if whitelist == "*" {
+		return true
+	}
+
+	return false
+}
+
 // ServeHTTP implements caddyhttp.MiddlewareHandler.
 func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
 	api := "unknown"
@@ -126,7 +154,7 @@ func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddy
 	fmt.Printf("\n\n%v\n\n", urlComponents)
 
 	for _, whitelist := range m.Whitelist {
-		if r.RequestURI == whitelist {
+		if matchWhitelist(r.RequestURI, whitelist) {
 			return next.ServeHTTP(w, r)
 		}
 	}
