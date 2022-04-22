@@ -532,10 +532,14 @@ github.com/redhatinsights/crcauthlib v0.0.9 h1:NDaMjv+yBYh2FQtDi2gAB9drv+kqttZEG
 github.com/redhatinsights/crcauthlib v0.0.9/go.mod h1:C0SVFPe4Bb4QO1p40+H07JyNqYxgt4zdMlyWTptYdmc=
 github.com/redhatinsights/crcauthlib v0.0.10 h1:jLnrq1VXvjBk/s622YBKSgB7eSJrVaTBYKAATfsB4kA=
 github.com/redhatinsights/crcauthlib v0.0.10/go.mod h1:EosCOXhVRMHjtSNfrZ/4+ybeIqjwVGqudK0YnNI9s3M=
+github.com/redhatinsights/crcauthlib v0.0.11 h1:a736I15xx9bfAlRAC4I0V8r9RBQUw72m0DWCsvWyQow=
+github.com/redhatinsights/crcauthlib v0.0.11/go.mod h1:6s1FtLgf0hYbXd9i3keGGtU/DE3SvkCc8Q84HJLA8JM=
 github.com/redhatinsights/platform-go-middlewares v0.8.1 h1:PNmD3kk4OhrnR+tYQBLOxq6Rf0INcim4/H+6dHlWwFc=
 github.com/redhatinsights/platform-go-middlewares v0.8.1/go.mod h1:koDaxx4Ht3ZgXqAhfkKFhBy9586kZ3aDm9IAlEs0Oo4=
 github.com/redhatinsights/platform-go-middlewares v0.13.0 h1:xbEyoAvalSi7rt84IT2cHIchuCrztV9s0+mglhxmKcQ=
 github.com/redhatinsights/platform-go-middlewares v0.13.0/go.mod h1:i5gVDZJ/quCQhs5AW5CwkRPXlz1HfDBvyNtXHnlXZfM=
+github.com/redhatinsights/platform-go-middlewares v0.14.0 h1:J7D/4ScOVknr74bfZaeN8zbNWfDhqdJw0IYAyG9xJhc=
+github.com/redhatinsights/platform-go-middlewares v0.14.0/go.mod h1:i5gVDZJ/quCQhs5AW5CwkRPXlz1HfDBvyNtXHnlXZfM=
 github.com/rogpeppe/fastuuid v0.0.0-20150106093220-6724a57986af/go.mod h1:XWv6SoW27p1b0cqNHllgS5HIMJraePCO15w5zCzIWYg=
 github.com/rogpeppe/go-internal v1.1.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
