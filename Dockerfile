@@ -1,5 +1,5 @@
 # Build the manager binary
-FROM registry.access.redhat.com/ubi8/go-toolset:1.15.7 as builder
+FROM registry.access.redhat.com/ubi8/go-toolset:1.17.7 as builder
 
 WORKDIR /workspace
 # Copy the Go Modules manifests
@@ -13,7 +13,7 @@ RUN go mod download
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy
 
 COPY caddyplugin.go caddyplugin.go
-RUN ~/go/bin/xcaddy build v2.4.3 --with github.com/redhatinsights/caddy-plugin/@v0.0.1=./
+RUN ~/go/bin/xcaddy build v2.5.1 --with github.com/redhatinsights/caddy-plugin/@v0.0.1=./
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
