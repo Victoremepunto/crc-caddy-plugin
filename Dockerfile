@@ -10,7 +10,7 @@ COPY go.sum go.sum
 USER 0
 RUN mkdir .local
 RUN go mod download
-RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy
+RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@0.3.0
 
 COPY caddyplugin.go caddyplugin.go
 RUN ~/go/bin/xcaddy build v2.5.1 --with github.com/redhatinsights/caddy-plugin/@v0.0.1=./
