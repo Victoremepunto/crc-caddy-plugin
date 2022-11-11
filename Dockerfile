@@ -10,19 +10,19 @@ COPY go.sum go.sum
 USER 0
 RUN mkdir .local
 RUN go mod download
-RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@v0.3.0
+RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@v0.3.1
 
 COPY caddyplugin.go caddyplugin.go
-RUN ~/go/bin/xcaddy build v2.5.1 --with github.com/redhatinsights/caddy-plugin/@v0.0.1=./
+RUN ~/go/bin/xcaddy build v2.6.2 --with github.com/redhatinsights/caddy-plugin/@v0.0.1=./
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
 FROM gcr.io/distroless/static:nonroot
 WORKDIR /
-COPY --from=builder --chown=65532:65532 /workspace/.local /.local
+COPY --from=builder --chown=65534:65534 /workspace/.local /.local
 COPY CaddyfileSidecar /etc/Caddyfile
 COPY --from=builder /workspace/caddy .
-USER 65532:65532
+USER 65534:65534
 
 #ENTRYPOINT ["/caddy", "run"]
 ENTRYPOINT ["/caddy", "run", "--config", "/etc/Caddyfile"]
