@@ -19,8 +19,9 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8-860
 WORKDIR /
 COPY --from=builder --chown=65534:65534 /workspace/.local /.local
 COPY CaddyfileSidecar /etc/Caddyfile
+COPY candlepin-ca.pem /cas/ca.pem
 COPY --from=builder /workspace/caddy .
+COPY runner.sh .
 USER 65534:65534
 
-#ENTRYPOINT ["/caddy", "run"]
-ENTRYPOINT ["/caddy", "run", "--config", "/etc/Caddyfile"]
+ENTRYPOINT ["/runner.sh"]
