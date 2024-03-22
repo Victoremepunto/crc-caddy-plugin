@@ -149,38 +149,44 @@ func matchWhitelist(path, whitelist string) bool {
 // ServeHTTP implements caddyhttp.MiddlewareHandler.
 func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
 	api := "unknown"
+	var err error
 
-	urlComponents := strings.Split(r.RequestURI, "/")
-	fmt.Printf("\n\n%v\n\n", urlComponents)
+	if r.Method != http.MethodOptions {
 
-	for _, whitelist := range m.Whitelist {
-		if matchWhitelist(r.RequestURI, whitelist) {
-			return next.ServeHTTP(w, r)
+		urlComponents := strings.Split(r.RequestURI, "/")
+		fmt.Printf("\n\n%v\n\n", urlComponents)
+
+		for _, whitelist := range m.Whitelist {
+			if matchWhitelist(r.RequestURI, whitelist) {
+				return next.ServeHTTP(w, r)
+			}
 		}
-	}
-	if len(urlComponents) >= 2 {
-		if urlComponents[1] == "api" {
-			api = urlComponents[2]
+		if len(urlComponents) >= 2 {
+			if urlComponents[1] == "api" {
+				api = urlComponents[2]
+			}
 		}
+
+		ident, err := m.validator.ProcessRequest(r)
+		if err != nil {
+			// Check if we want to uncomment later
+			//w.Write([]byte(fmt.Sprintf("%s", err)))
+			return caddyhttp.Error(403, err)
+		}
+
+		jdata, err := json.Marshal(ident)
+
+		if err != nil {
+			return caddyhttp.Error(403, err)
+		}
+
+		output := base64.StdEncoding.EncodeToString(jdata)
+
+		r.Header["x-rh-identity"] = []string{output}
+		//m.w.Write([]byte(fmt.Sprintf("%v", r)))
+
 	}
 
-	ident, err := m.validator.ProcessRequest(r)
-	if err != nil {
-		// Check if we want to uncomment later
-		//w.Write([]byte(fmt.Sprintf("%s", err)))
-		return caddyhttp.Error(403, err)
-	}
-
-	jdata, err := json.Marshal(ident)
-
-	if err != nil {
-		return caddyhttp.Error(403, err)
-	}
-
-	output := base64.StdEncoding.EncodeToString(jdata)
-
-	r.Header["x-rh-identity"] = []string{output}
-	//m.w.Write([]byte(fmt.Sprintf("%v", r)))
 	start := time.Now()
 
 	rr := caddyhttp.NewResponseRecorder(w, nil, nil)
