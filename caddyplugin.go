@@ -170,13 +170,18 @@ func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddy
 		ident, err := m.validator.ProcessRequest(r)
 		if err != nil {
 			// Check if we want to uncomment later
-			//w.Write([]byte(fmt.Sprintf("%s", err)))
+			if os.Getenv("DEBUG") == "true" {
+				w.Write([]byte(fmt.Sprintf("%s", err)))
+			}
 			return caddyhttp.Error(403, err)
 		}
 
 		jdata, err := json.Marshal(ident)
 
 		if err != nil {
+			if os.Getenv("DEBUG") == "true" {
+				w.Write([]byte(fmt.Sprintf("%s", err)))
+			}
 			return caddyhttp.Error(403, err)
 		}
 

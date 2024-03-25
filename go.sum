@@ -464,8 +464,8 @@ github.com/quic-go/qtls-go1-20 v0.1.0/go.mod h1:JKtK6mjbAVcUTN/9jZpvLbGxvdWIKS8u
 github.com/quic-go/quic-go v0.32.0 h1:lY02md31s1JgPiiyfqJijpu/UX/Iun304FI3yUqX7tA=
 github.com/quic-go/quic-go v0.32.0/go.mod h1:/fCsKANhQIeD5l76c2JFU+07gVE3KaA0FP+0zMWwfwo=
 github.com/rcrowley/go-metrics v0.0.0-20181016184325-3113b8401b8a/go.mod h1:bCqnVzQkZxMG4s8nGwiZ5l3QUCyqpo9Y+/ZMZ9VjZe4=
-github.com/redhatinsights/crcauthlib v0.3.0 h1:A5ZNzH6mKDchU4zOStqePtgjA1EM7nhxH5KEJPgc9wM=
-github.com/redhatinsights/crcauthlib v0.3.0/go.mod h1:oEyA5Dvccg5ot96eDreFc87pqVe2Cz0ZARNMsbFF7tg=
+github.com/redhatinsights/crcauthlib v0.3.1 h1:b60E0/SxZKdjIH8FFH8mJzjggBTEPaHeF57LK+2cdzk=
+github.com/redhatinsights/crcauthlib v0.3.1/go.mod h1:oEyA5Dvccg5ot96eDreFc87pqVe2Cz0ZARNMsbFF7tg=
 github.com/redhatinsights/platform-go-middlewares/v2 v2.0.0-beta.2 h1:pEDiKYqxEoZT6Mx7B57rYqIgmYyly0f8JfzfY38b9T4=
 github.com/redhatinsights/platform-go-middlewares/v2 v2.0.0-beta.2/go.mod h1:Ipl1kmvhZSpgRoe7MyJNK+VAvGG1cIqn535TuId5npw=
 github.com/rogpeppe/fastuuid v0.0.0-20150106093220-6724a57986af/go.mod h1:XWv6SoW27p1b0cqNHllgS5HIMJraePCO15w5zCzIWYg=
