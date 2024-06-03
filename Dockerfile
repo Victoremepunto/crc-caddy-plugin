@@ -1,5 +1,5 @@
 # Build the manager binary
-FROM registry.access.redhat.com/ubi8/go-toolset:1.20.12-2 as builder
+FROM registry.access.redhat.com/ubi8/go-toolset:1.21.9-3 as builder
 
 WORKDIR /workspace
 # Copy the Go Modules manifests
@@ -15,7 +15,7 @@ RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@v0.3.4
 COPY caddyplugin.go caddyplugin.go
 RUN ~/go/bin/xcaddy build v2.6.4 --with github.com/redhatinsights/crc-caddy-plugin/@v0.0.1=./
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8-860
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.10-896
 WORKDIR /
 COPY --from=builder --chown=65534:65534 /workspace/.local /.local
 COPY CaddyfileSidecar /etc/Caddyfile
