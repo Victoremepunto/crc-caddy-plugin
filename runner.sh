@@ -1,10 +1,9 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
-if [ -f "/etc/caddy/Caddyfile.json" ];
-then
+if [ -f "/etc/caddy/Caddyfile.json" ]; then
     echo "Running caddy gateway"
-    /caddy run --config /etc/caddy/Caddyfile.json
+    caddy run --config /etc/caddy/Caddyfile.json --adapter json
 else
     echo "Running caddy sidecar"
-    /caddy run --config /etc/Caddyfile
+    caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
 fi
