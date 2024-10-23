@@ -4,7 +4,7 @@ The CRC Caddy Image is used in the ephemeral environments to emulate the authent
 
 It runs in one of two modes:
 
-* **Side Car Mode** - where the configuration is taken from `/etc/Caddyfile`
+* **Side Car Mode** - where the configuration is taken from `/etc/caddy/Caddyfile`
 * **Gateway Mode** - where configuration is taken from `/etc/caddy/Caddyfile.json`
 
 If `/etc/caddy/Caddyfile.json` is present at startup, then the app will assume that it is running in **Gateway Mode**. Otherwise, the app will assume it should run in **Side Car Mode**

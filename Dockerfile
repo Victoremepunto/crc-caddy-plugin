@@ -1,27 +1,31 @@
-# Build the manager binary
-FROM registry.access.redhat.com/ubi8/go-toolset:1.21.9-3 as builder
+FROM registry.access.redhat.com/ubi8/go-toolset:1.21.13-1.1727869850 as build
 
-WORKDIR /workspace
-# Copy the Go Modules manifests
-COPY go.mod go.mod
-COPY go.sum go.sum
-# cache deps before building and copying source so that we don't need to re-download as much
-# and so that source changes don't invalidate our downloaded layer
-USER 0
-RUN mkdir .local
-RUN go mod download
-RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@v0.3.4
+RUN mkdir /opt/app-root/src/crccaddyplugin
+WORKDIR /opt/app-root/src/crccaddyplugin
 
-COPY caddyplugin.go caddyplugin.go
-RUN ~/go/bin/xcaddy build v2.6.4 --with github.com/redhatinsights/crc-caddy-plugin/@v0.0.1=./
+COPY caddyplugin.go .
+RUN set -exu ; \
+    go mod init crccaddyplugin; \
+    go get github.com/caddyserver/caddy/v2@v2.8.4; \
+    go mod tidy;
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.10-896
-WORKDIR /
-COPY --from=builder --chown=65534:65534 /workspace/.local /.local
-COPY CaddyfileSidecar /etc/Caddyfile
+RUN mkdir /opt/app-root/src/caddy
+WORKDIR /opt/app-root/src/caddy
+
+COPY main.go.template ./main.go
+
+RUN set -ex; \
+  go mod init caddy; \
+  go get github.com/caddyserver/caddy/v2@v2.8.4; \
+  go mod edit -replace "github.com/RedHatInsights/crc-caddy-plugin=/opt/app-root/src/crccaddyplugin"; \
+  go mod tidy ;\
+  go build;
+
+FROM quay.io/redhat-services-prod/hcm-eng-prod-tenant/caddy-ubi:0d6954b
+
+COPY CaddyfileSidecar /etc/caddy/Caddyfile
 COPY candlepin-ca.pem /cas/ca.pem
-COPY --from=builder /workspace/caddy .
+COPY --from=build /opt/app-root/src/caddy/caddy /usr/bin/caddy
 COPY runner.sh .
-USER 65534:65534
 
-ENTRYPOINT ["/runner.sh"]
+ENTRYPOINT ["/srv/runner.sh"]
