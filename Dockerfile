@@ -26,6 +26,3 @@ FROM quay.io/redhat-services-prod/hcm-eng-prod-tenant/caddy-ubi:0d6954b
 COPY CaddyfileSidecar /etc/caddy/Caddyfile
 COPY candlepin-ca.pem /cas/ca.pem
 COPY --from=build /opt/app-root/src/caddy/caddy /usr/bin/caddy
-COPY runner.sh .
-
-ENTRYPOINT ["/srv/runner.sh"]
