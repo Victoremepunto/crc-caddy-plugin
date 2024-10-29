@@ -2,18 +2,7 @@
 
 The CRC Caddy Image is used in the ephemeral environments to emulate the authentications used on ConsoleDot. It is deployed via the [Clowder](https://github.com/RedHatInsights/clowder) operator. The functionality is provided as a Caddy plugin.
 
-It runs in one of two modes:
-
-* **Side Car Mode** - where the configuration is taken from `/etc/caddy/Caddyfile`
-* **Gateway Mode** - where configuration is taken from `/etc/caddy/Caddyfile.json`
-
-If `/etc/caddy/Caddyfile.json` is present at startup, then the app will assume that it is running in **Gateway Mode**. Otherwise, the app will assume it should run in **Side Car Mode**
-
-## Side Car Mode
-The **Side Car Mode** configuration is in this repository and presents a simple reverse proxy to an individual service. The intention for this image mode is for the container to be run inside the same pod as the service it provides authentication for.
-
-## Gateway Mode
-The **Gateway Mode** expects configuration to be mounted at `/etc/caddy/Caddyfile.json`. The app is intended to run as a stand-alone pod which serves as a gateway that handles authentication/routing to multiple paths/services.
+This Caddy image presents a simple reverse proxy to an individual service. The intention for it is for the container to be run inside the same pod as the service it provides authentication for.
 
 ## Configuration
 The Caddy CRC plugin has three configuration options, an example of which is shown below:
